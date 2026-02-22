@@ -113,6 +113,20 @@ configuration:
       This option allows you to enable Taildrop, a file sharing service
       that allows you to share files with other Tailscale nodes.
       This option is enabled by default.
+  share_openclaw:
+    name: Share OpenClaw with Serve or Funnel
+    description: >-
+      This option allows you to enable Tailscale Serve or Funnel features to present
+      your OpenClaw instance (port 18789) with a valid certificate on your tailnet or on the
+      internet.
+      This option is disabled by default.
+  openclaw_port:
+    name: OpenClaw share port
+    description: >-
+      This option lets you specify which port the Tailscale Serve and Funnel features
+      will use to present your OpenClaw instance on the tailnet and on the internet.
+      Only ports 8443 and 10000 are allowed (port 443 is reserved for Home Assistant).
+      Port 8443 is used by default.
   userspace_networking:
     name: Userspace networking mode
     description: >-
