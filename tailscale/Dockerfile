@@ -36,6 +36,12 @@ RUN \
 # Copy root filesystem
 COPY rootfs /
 
+# Ensure scripts are executable
+RUN chmod +x \
+    /etc/s6-overlay/scripts/stage2_hook.sh \
+    /etc/s6-overlay/s6-rc.d/share-openclaw/run \
+    /etc/s6-overlay/s6-rc.d/share-openclaw/finish
+
 HEALTHCHECK \
     CMD healthcheck
 
