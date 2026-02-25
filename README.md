@@ -1,3 +1,9 @@
+This repo is intended to be used with the HAOS add-on [OpenClawHomeAssistant](https://github.com/techartdev/OpenClawHomeAssistant).
+It works correctly when the settings in OpenClawHomeAssistant are configured as follows:
+- Gateway Mode: local
+- Gateway Bind Mode: tailnet
+- Access Mode: custom or tailnet_https
+
 # Home Assistant Community App: Tailscale
 
 [![GitHub Release][releases-shield]][releases]
