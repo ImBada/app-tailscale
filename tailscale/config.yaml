@@ -1,6 +1,6 @@
 ---
 name: Tailscale for OpenClaw
-version: 0.27.1-4
+version: 0.27.1-5
 slug: tailscale
 description: Zero config VPN for building secure networks
 url: https://github.com/hassio-addons/app-tailscale
