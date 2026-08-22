@@ -1,0 +1,52 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community App: Tailscale
+# Enables Tailscale Serve or Funnel feature to share OpenClaw (port 18789)
+# ==============================================================================
+
+declare -a options
+
+# Validate share_openclaw value
+if ! bashio::config.equals 'share_openclaw' 'serve' && \
+  ! bashio::config.equals 'share_openclaw' 'funnel'
+then
+  bashio::exit.nok "Invalid value '$(bashio::config 'share_openclaw')' for share_openclaw. Must be either 'serve' or 'funnel'"
+fi
+
+# Check if Tailscale HTTPS is enabled
+if ! /opt/tailscale status --self=true --peers=false --json \
+  | jq -rce '.Self.CapMap | has("https")' > /dev/null;
+then
+  bashio::exit.nok \
+    "Tailscale's HTTPS support is disabled." \
+    "Enable HTTPS certificates for your tailnet on the DNS page of the Tailscale admin console."
+fi
+
+# Check if Funnel is available
+if bashio::config.equals 'share_openclaw' 'funnel'; then
+  if ! /opt/tailscale status --self=true --peers=false --json \
+    | jq -rce '.Self.CapMap | has("funnel")' > /dev/null;
+  then
+    bashio::exit.nok \
+      "Tailscale's Funnel support is disabled." \
+      "Enable Funnel for this device in your tailnet policy before using share_openclaw: funnel."
+  fi
+fi
+
+options+=("$(bashio::config 'share_openclaw')")
+options+=(--bg=false)
+options+=(--https="$(bashio::config 'openclaw_port')")
+options+=(--set-path=/)
+if bashio::config.true 'openclaw_https_backend'; then
+  options+=(https+insecure://127.0.0.1:18789)
+else
+  options+=(http://127.0.0.1:18789)
+fi
+
+# This service can notify S6 when we are really starting
+echo "" >&3
+exec 3>&-
+
+# Set up serve or funnel for OpenClaw
+exec /opt/tailscale "${options[@]}"

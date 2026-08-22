@@ -1,6 +1,6 @@
 ---
-name: Tailscale
-version: dev
+name: Tailscale for OpenClaw
+version: 0.29.1-openclaw.1
 slug: tailscale
 description: Zero config VPN for building secure networks
 url: https://github.com/hassio-addons/app-tailscale
@@ -53,6 +53,9 @@ options:
   login_server: "https://controlplane.tailscale.com"
   share_homeassistant: disabled
   share_on_port: 443
+  share_openclaw: disabled
+  openclaw_port: 8443
+  openclaw_https_backend: false
   services: []
   snat_subnet_routes: true
   stateful_filtering: false
@@ -82,6 +85,9 @@ schema:
   login_server: url
   share_homeassistant: list(disabled|serve|funnel)
   share_on_port: match(^(?:443|8443|10000)$)
+  share_openclaw: list(disabled|serve|funnel)
+  openclaw_port: match(^(?:8443|10000)$)
+  openclaw_https_backend: bool
   services:
     - name: "match(^svc:[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$)"
       target: "match(^(?:https?|tcp)://127\\.0\\.0\\.1:([1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$)"

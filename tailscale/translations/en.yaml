@@ -86,6 +86,27 @@ configuration:
       internet.
       Only ports 443, 8443, and 10000 are allowed by Tailscale.
       Port 443 is used by default.
+  share_openclaw:
+    name: Share OpenClaw with Serve or Funnel
+    description: >-
+      This option allows you to enable Tailscale Serve or Funnel features to present
+      your OpenClaw instance (port 18789) with a valid certificate on your tailnet or
+      on the internet.
+      This option is disabled by default.
+  openclaw_port:
+    name: OpenClaw share port
+    description: >-
+      This option lets you specify which port the Tailscale Serve and Funnel features
+      will use to present your OpenClaw instance on the tailnet and on the internet.
+      Only ports 8443 and 10000 are allowed (port 443 is reserved for Home Assistant).
+      Port 8443 is used by default.
+  openclaw_https_backend:
+    name: Use HTTPS for the OpenClaw backend
+    description: >-
+      This option makes Tailscale connect to the local OpenClaw instance over HTTPS
+      without verifying its certificate. Enable it only when OpenClaw is configured
+      to serve HTTPS locally.
+      This option is disabled by default.
   services:
     name: Service hosts
     description: >-
